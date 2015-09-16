@@ -102,5 +102,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Adding Media
 MEDIA_URL  = '/media/'
 MEDIA_PATH = os.path.join(BASE_DIR, 'media')
+
+# Make Thumbnail debug
+THUMBNAIL_DEBUG = True

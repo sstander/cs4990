@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block 'content' %}
+    <h1>{{post.title}}</h1>
+    {% if post.comment_set.all %}
+        <table>
+            {% for comment in post.comment_set.all %}
+                <tr>
+                    <td colspan='2'>{{ comment.person }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        {% thumbnail post.picture "x300" as im %}
+                            <img src="{{ im.url }}">
+                        {% endthumbnail %}
+                    </td>
+                    <td>{{ comment.comment_text }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
