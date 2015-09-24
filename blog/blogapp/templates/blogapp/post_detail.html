@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block 'title'%}{{ post.title }}{% endblock 'title' %}
+    
+{% block 'content' %}
+    {% include 'blogapp/_post.html' %}
+    <!-- Comments go here -->
+    {% for comment in post.comment_set.all reversed %}
+        <h4>On {{ comment.pub_date|date:"M d, Y h:m:s" }}, {{ comment.person }} commented:</h4>
+        <div class="well">
+            {{ comment.comment_text }}
+        </div>
+
+        {% if not forloop.last %}
+            <hr>
+        {% endif %}
+    {% empty %}
+        <p>Be the first of your friends to comment on this post.<p>
+    {% endfor %}
+    <form action="{% url 'blogapp:submitcomment' %}" method="post">
+    {% csrf_token %}
+    <table class="table">
+    {{ form }}
+    </table>
+    <input type="submit" value="Submit comment">
+    </form>
+
+{% endblock %}

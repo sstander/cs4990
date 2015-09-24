@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load thumbnail % }
+
+{% block 'title' %}
+    {{ category.category_name }}
+{% endblock 'title' %}
+
+{% block 'content' %}
+    <h1>{{ category.category_name }} Posts </h1>
+    {% for post in category.post_set.all %}
+        {% include 'blogapp/_post.html' %}
+        <a href="{% url 'blogapp:detail' post.id %}#comment-section">Read More...</a>
+    {% endfor %}
+{% endblock 'content' %}

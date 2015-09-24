@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
-
-    {% block 'title' %}List of Blog Posts{% endblock %}
-
+{% load thumbnail %}
+    {% block 'title' %}Most Recent Blog Posts{% endblock %}
     {% block 'content' %}
-        <h1>List of Sarah's Blog Posts</h1>
+        <h1>Sarah's Most Recent Posts</h1>
         {% if post_list %}
-            <ul>
-                {% for comment in post_list %}
-                    <li><a href="{% url 'post:detail' comment.id %}">{{ comment.person }}</a> - {{comment.comment_text}}</li>
+                {% for post in post_list %}
+                    {% include 'blogapp/_post.html' %}
+                    <a href="{% url 'blogapp:detail' post.id %}#comment-section">Leave a comment...</a>
+                    {% if not forloop.last %}
+                        <hr style="border-top: 5px solid black;">
+                    {% endif %}
                 {% endfor %}
-            </ul>
         {% else %}
             <p>No posts to show.</p>
         {% endif %}

@@ -1,0 +1,26 @@
+                    {% load thumbnail %}
+                    {% if post.picture %}
+                        {% thumbnail post.picture "300x300" crop="center" as im %}
+                            <img src="{{ im.url }}" style="text-align: center;">
+                        {% endthumbnail %}
+                    {% endif %}
+                    <a href="{% url 'blogapp:detail' post.id %}"><h2>{{ post.title }}</h2></a>
+                    <br />
+                    <h4 class="published">
+                        Published {{ post.pub_date|date:"M d, Y" }}
+                        (Filed in:
+                            {% for category in post.category.all %}
+                                <a href="{% url 'blogapp:categorydetail' category.id %}">{{ category.category_name }}</a>
+                                {% if not forloop.last %}
+				,
+				{% endif %}
+                            {% empty %}
+			        <span>No categories to show</span>
+                            {% endfor %}
+                        )
+                    </h4>
+                    
+                    <div class="post-body">
+                        {{ post.body }}
+                    </div>
+
