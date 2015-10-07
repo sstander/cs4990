@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}Delete Item{% endblock %}
+
+{% block 'content' %}
+    <h1>Delete An Item</h1>
+    <p>Are you sure you want to delete {{ item }} ?</p>
+    
+    <form action="{% url 'catalog:deleteitem' item.id %}" method="post">
+    {% csrf_token %}
+    <table class="table">
+    {{ form }}
+    <tr>
+        <td colspan="2"><input type="submit" value="Delete Item"></td>
+        <td colspan="2"><a href="{% url 'catalog:categorydetail' item.id%}">Cancel</a></td>
+    </tr>
+    </table>
+    </form>
+{% endblock %}

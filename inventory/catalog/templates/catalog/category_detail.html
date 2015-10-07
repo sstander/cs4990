@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block 'title' %}List of Items{% endblock %}
+{% block 'content' %}
+<h1>Current Items in {{ category.name }}</h1>
+
+{% for item in category.item_set.all %}
+        <form action="{% url 'catalog:updateitem' item.quantity %}" method="post">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+		    <td colspan="1">{{ item.name }}
+                    	<input value="{{ item.quantity }}" type="number" name="quantity" min="0" style="width:50px; margin-left:10px;">
+		    	<input type="submit" value="Update" style="margin-left:10px;">
+			<a href="{% url 'catalog:deleteitem' item.id %}" style="margin-left:10px;"><span style="color:red" class="glyphicon glyphicon-remove"></span></a>
+		    </td>
+                </tr>
+            </table>
+        </form>
+
+
+{% empty %}
+    <p>There are no items. Want to <a href="{% url 'catalog:additem' %}">add one?</a></p>
+
+{% endfor %}
+
+<p><a href="{% url 'catalog:additem' %}"><span style="color:green" class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Add a new Item</a></p>
+<p>Go back to list of <a href="{% url 'catalog:categorylist' %}">categories</a></p>
+
+{% endblock %}

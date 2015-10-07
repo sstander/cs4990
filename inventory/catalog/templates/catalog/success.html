@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block 'title' %}Deletion{% endblock %}
+{% block 'content' %}
+<h1>Delete Successful</h1>
+<a href="{% url 'catalog:categorydetail' category.id %}">Return to Items</a> | <a href="{% url 'catalog:categorylist' %}">Categories</a>
+{% endblock 'content' %}
