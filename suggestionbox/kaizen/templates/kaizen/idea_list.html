@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}List of Kaizens{% endblock %}
+
+{% block 'content' %}
+    <h1>List of User=submitted Kaizens</h1>
+
+    {% for idea in idea_list %}
+        <div> {% ifequal idea.profile.user request.user %}class="mark"{% endifequal %}
+        <h3>{{ idea.title }}</h3>
+        <h4>Submitted by {{ idea.profile }} on {{ idea.pub_date|date:"m d Y" }}</h4>
+        <p>
+            {{ idea.description }}
+        </p>
+        <table class="table">
+        <tr>
+            <td>Category</td>
+            <td>{{ idea.category.title }}</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>{{ idea.status.get_status_display }}</td>
+        </tr>
+        </table>
+        </div>
+    {% empty %}
+        <p>No kaizens submited yet. Want to <a href="">submit one?</a></p>
+    {% endfor %}
+{% endblock %}
