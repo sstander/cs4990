@@ -1,16 +1,46 @@
 {% extends 'base.html' %}
 {% block 'title' %}List of Items{% endblock %}
+{% block 'extrascripts' %}
+<script>
+// $(function () {
+$(document).ready(function () {
+    $(".submitqty").click(
+    function (event) {
+        form = $(this).parents("form");
+        form.submit(
+    	    function (event) {
+                event.preventDefault();
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                            $('#status').text('Successfully updated ').show().fadeOut(5000);
+                    
+                            console.log(data);
+                        },
+                    error: function (xd4, statusText, errorText) {
+                            $('#status').text('Uh oh. Something didn\'t go right.');
+                            console.log("error was " + statusText + " and error text was " + errorText);
+                        },
+                });
+        });
+});
+});
+</script>
+{% endblock %}
 {% block 'content' %}
 <h1>Current Items in {{ category.name }}</h1>
-
+<div id="status" class="alert alert-success" style="display: none;" role="alert"></div>
 {% for item in category.item_set.all %}
-        <form action="{% url 'catalog:updateitem' item.quantity %}" method="post">
+        <form action="{% url 'catalog:updateitemquantity' item.id %}" method="post">
             {% csrf_token %}
             <table class="table">
                 <tr>
 		    <td colspan="1">{{ item.name }}
                     	<input value="{{ item.quantity }}" type="number" name="quantity" min="0" style="width:50px; margin-left:10px;">
-		    	<input type="submit" value="Update" style="margin-left:10px;">
+		    	<input type="submit" value="Update" style="margin-left:-4px;" class="submitqty">
+                        <a href="{% url 'catalog:updateitem' item.id %}" style="margin-left:10px;"><span class="glyphicon glyphicon-edit"></span></a>
 			<a href="{% url 'catalog:deleteitem' item.id %}" style="margin-left:10px;"><span style="color:red" class="glyphicon glyphicon-remove"></span></a>
 		    </td>
                 </tr>

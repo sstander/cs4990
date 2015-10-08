@@ -44,7 +44,7 @@ class CreateCategoryView(CreateView):
     def get_success_url(self):
         return reverse('catalog:categorydetail', args=(self.object.pk,))
 
-class UpdateCategoryView(AjaxableResponseMixin, UpdateView):
+class UpdateCategoryView(UpdateView):
     model = Category
     fields = ['parent', 'name', 'description']
 
@@ -62,9 +62,16 @@ class CreateItemView(CreateView):
     def get_success_url(self):
         return reverse('catalog:categorydetail', args=(self.object.category.id,))
 
-class UpdateItemView(AjaxableResponseMixin, UpdateView):
+class UpdateItemView(UpdateView):
     model = Item
     fields = ['name', 'quantity', 'sku', 'category']
+
+    def get_success_url(self):
+        return reverse('catalog:categorydetail', args=(self.object.category.id,))
+
+class UpdateItemQuantityView(AjaxableResponseMixin, UpdateView):
+    model = Item
+    fields = ['quantity']
 
     def get_success_url(self):
         return reverse('catalog:categorydetail', args=(self.object.category.id,))

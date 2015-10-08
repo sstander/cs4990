@@ -2,5 +2,10 @@
 {% block 'title' %}Deletion{% endblock %}
 {% block 'content' %}
 <h1>Delete Successful</h1>
-<a href="{% url 'catalog:categorydetail' category.id %}">Return to Items</a> | <a href="{% url 'catalog:categorylist' %}">Categories</a>
+<a href="/">Return to Homepage</a>
 {% endblock 'content' %}
+
+
+
+
+{% comment %}<a href="{% url 'catalog:categorydetail' category.id %}">Return to Items</a> | <a href="{% url 'catalog:categorylist' %}">Categories</a> {% endcomment %}
