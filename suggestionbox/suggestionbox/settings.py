@@ -121,3 +121,5 @@ SITE_ID = 1
 USERENA_SIGNIN_REDIRECT_URL = '/accounts/%(username)s/'
 LOGIN_URL = '/accounts/signin/'
 LOGOUT_URL = '/accounts/signout/'
+
+USERENA_ACTIVATION_REQUIRED = False

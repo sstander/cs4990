@@ -44,4 +44,3 @@ class Comment(models.Model):
     comment_text = models.TextField()
     idea = models.ForeignKey(Idea)
     pub_date = models.DateTimeField(auto_now_add=True)
-

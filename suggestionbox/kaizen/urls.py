@@ -1,11 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.conf.urls import url
+from django.views.generic import TemplateView, CreateView, DeleteView, UpdateView
 from . import views
-from django.views.generic import TemplateView
-
 
 urlpatterns = [
-    url(r'^$', login_required(views.IdeaListView.as_view()), name="idealist"),
-    url(r'^secrets/$', login_required(views.SecretView.as_view()), name="secrets"),
+   url(r'^$', login_required(views.IdeaListView.as_view()), name="idealist"),
+   url(r'^idea/(?P<pk>[0-9]+)/$', login_required(views.IdeaDetailView.as_view()), name="ideadetail"),
+   url(r'^idea/add/$', views.CreateIdeaView.as_view(), name="addidea"),
+   url(r'^idea/(?P<pk>[0-9]+)/update/$', views.UpdateIdeaView.as_view(), name="ideaupdate"),
+   url(r'^idea/(?P<pk>[0-9]+)/delete/$', views.DeleteIdeaView.as_view(), name="deleteidea"),
+   url(r'^idea/delete/success/$', TemplateView.as_view(template_name="kaizen/idea_delete_success.html"), name="deleteideasuccess"),
+   url(r'^comment/submit/$', views.AddCommentView.as_view(), name="submitcomment"),
+   url(r'^comment/submit/success$', TemplateView.as_view(template_name="kaizen/comment_success.html"), name="comment_success"),
+   url(r'^(?P<pk>[0-9]+)/$', views.ChangeStatusView.as_view(), name="changestatus"),
 ]
-

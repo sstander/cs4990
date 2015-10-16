@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Idea{% endblock %}
+
+{% block content %}
+    <h1>Delete {{ idea.title }}</h1>
+    {% ifequal idea.profile.user request.user %}
+        <p>Are you sure you want to delte {{ idea }}?</p>
+        <form action="{% url 'kaizen:deleteidea' idea.id %}" method='post'>
+            {% csrf_token %}
+            <table class="table">
+                {{ form }}
+                <tr>
+                    <td colspan="2"><input type="submit" value="Delete Idea"></td>
+                    <td colspan="2"><a href="..">Cancel</a></td>
+                </tr>
+            </table>
+        </form>
+    {% else %}
+        <p>You don't have permission to delete this idea.</p>
+        <a href="..">Cancel</a>
+    {% endifequal %}
+{% endblock content %}    

@@ -8,7 +8,7 @@
     <meta name="description" content="Inventory Catalog Site">
     <meta name="author" content="Sarah Stander">
 
-    <title>{% block 'title' %}Kaizen{% endblock %}</title>
+    <title>{% block title %}Kaizen{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
     <!-- Latest compiled and minified CSS -->
@@ -35,6 +35,8 @@
      list-style-type: none;
   }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  {% block extrascripts %}{% endblock %}
   </head>
 
   <body>
@@ -54,16 +56,26 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="/">Home</a></li>
             <li><a href="/admin/">Admin</a></li>
-            <li>{% if request.user.is_authenticated %}
-                <a href="/accounts/signout/">Log Out
             <li><a href="mailto:sarahtstander@gmail.com">Contact</a></li>
+            <li>
+                {% if request.user.is_authenticated %}
+                    <a href="/accounts/signout/">Log Out</a>
+                {% else %}
+                    <a href="/accounts/signin/">Log In</a>
+                {% endif %}
+            </li>
+            {% ifnotequal AnonymousUser request.user %}
+                <li>
+                    <a href="/accounts/{{request.user}}" style="color:white;">Logged in as {{ request.user }}</a>
+                </li>
+            {% endifnotequal %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container" style="margin-top: 50px;">
-{% block 'content' %}
+{% block content %}
 
       <div class="starter-template">
         <h1>Bootstrap starter template</h1>
@@ -76,7 +88,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

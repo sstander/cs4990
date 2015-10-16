@@ -71,7 +71,3 @@ class AddCommentView(FormView):
         comment.save()
 
         return super(AddCommentView, self).form_valid(form)
-
-class SecretView(TemplateView):
-    template_name="kaizen/secret.html"
-

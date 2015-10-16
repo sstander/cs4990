@@ -1,29 +1,39 @@
 {% extends 'base.html' %}
 
-{% block 'title' %}List of Kaizens{% endblock %}
+{% block title %}List of Kaizens{% endblock %}
 
-{% block 'content' %}
-    <h1>List of User=submitted Kaizens</h1>
+{% block content %}
+    <h1>List of User-submitted Kaizens</h1>
 
     {% for idea in idea_list %}
-        <div> {% ifequal idea.profile.user request.user %}class="mark"{% endifequal %}
-        <h3>{{ idea.title }}</h3>
-        <h4>Submitted by {{ idea.profile }} on {{ idea.pub_date|date:"m d Y" }}</h4>
+        <div {% ifequal idea.profile.user request.user %}class="mark"{% endifequal %}</div>
+        <a href="{% url 'kaizen:ideadetail' idea.id %}">
+            <h3>{{ idea.title }}</h3>
+        </a>
+        <h4>Submitted by {{ idea.profile }} on {{ idea.pub_date|date:"m/d/Y" }}</h4>
         <p>
             {{ idea.description }}
         </p>
         <table class="table">
         <tr>
-            <td>Category</td>
-            <td>{{ idea.category.title }}</td>
+            <td>Category:<span style="margin-left:20px;">{{ idea.category.title }}</span></td>
         </tr>
         <tr>
-            <td>Status</td>
-            <td>{{ idea.status.get_status_display }}</td>
+            <td>Status:<span style="margin-left:20px;">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'kaizen:changestatus' idea.id %}">
+                        {{ idea.get_status_display }} - change
+                    </a>
+                {% else %}
+                    {{ idea.get_status_display }}
+                {% endif %}
+		</span>
+            </td>
         </tr>
         </table>
         </div>
     {% empty %}
-        <p>No kaizens submited yet. Want to <a href="">submit one?</a></p>
+        <p>No kaizens submited yet. Want to <a href="{% url 'kaizen:addidea' %}">submit one?</a></p>
     {% endfor %}
+    <a href="{% url 'kaizen:addidea' %}"><span style="color:green; margin-right:7px;" class="glyphicon glyphicon-plus"></span></a><span>Add a new kaizen</span>
 {% endblock %}

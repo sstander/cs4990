@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if idea %}Update{% else %}Add{% endif %} An Idea{% endblock %}
+
+{% block content %}
+    <h1>{% if idea %}Update{% else %}Add{% endif %} {{ idea.title }}</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        <table class="table">
+            {{ form }}
+        </table>
+        <input class="add-btn" type="submit" value="{% if idea %}Update{% else %}Add{% endif %} Idea">
+        <span style="margin-left:10px;"><a href="/">Cancel</a>
+    </form>
+{% endblock content %}
