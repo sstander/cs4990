@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Add A Post{% endblock %}
+
+{% block content %}
+    <h1>Add A Post</h1>
+    <form action="." method="post" class="form" role="form" id="postform">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button class="btn btn-primary">Post</button>
+    </form>
+{% endblock content %}

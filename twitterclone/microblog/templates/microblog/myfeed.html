@@ -1,0 +1,5 @@
+{% for post in post_list %}
+    {% include "microblog/_post.html" %}
+{% empty %}
+    <p>No posts.</p>
+{% endfor %}
