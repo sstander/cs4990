@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}All Recent Posts{% endblock %}
+{% load thumbnail %}
+{% block title %}All Recent Posts{% endblock title %}
 {% block content %}
     <h1>Welcome to Twitterclone!
         {% if request.user.is_authenticated %}

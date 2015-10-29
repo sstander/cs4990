@@ -1,5 +1,37 @@
-{% for post in post_list %}
-    {% include "microblog/_post.html" %}
-{% empty %}
-    <p>No posts.</p>
-{% endfor %}
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}My Feed{% endblock title %}
+{% block content %}
+    <h1>
+        My Feed
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'microblog:addpost' %}" method="post">
+                {% csrf_token %}
+                <table class="table">
+                    {{ form }}
+                </table>
+                <button style="float:right; margin-top:-64px;" type="submit" class="btn btn-primary">Add Post</button>
+            </form>
+        {% endif %}
+    </h1>
+
+    {% if profile.following.all %}
+        <div class="following">
+            <h4>Following:</h4>
+            <ul style="list-style-image: url({{ profile.profile_picture }};">
+                {% for follow_profile in profile.following.all %}
+                    <li><a href="{% url 'microblog:profiledetail' follow_profile.user.id %}">@{{ follow_profile.user.username }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}    
+    {% for post in post_list %}
+        {% include "microblog/_post.html" %}
+        {% if not forloop.last %}
+            <hr class="postdivider">
+        {% endif %}
+    {% empty %}
+        <p>No posts.</p>
+    {% endfor %}
+{% endblock content %}

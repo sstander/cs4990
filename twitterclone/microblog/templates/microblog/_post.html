@@ -5,7 +5,7 @@
             <img src="{{ im.url }}" width="80" height="80" class="profilepic">
         {% endthumbnail %}
     {% else %}
-        <img src="{{ post.profile.get_gravatar_img_path }}" width="80" height="80" class="profilepic">
+        <img src="http://images.sodahead.com/polls/003831759/331109413_question_mark_face_answer_5_xlarge.jpeg" width="80" height="80" class="profilepic">
     {% endif %}
     <a href="{% url 'microblog:profiledetail' post.profile.user.id %}">@{{ post.profile.user.username }}</a> | <span class="pubdate">Published {{ post.pub_date|date:"d M, Y" }} at {{ post.pub_date|date:"g:i a" }}</span>
     <div class="well postbody">

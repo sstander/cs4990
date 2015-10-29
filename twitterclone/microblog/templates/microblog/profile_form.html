@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Create A Profile{% endblock %}
 {% block content %}
-    <form method="post" action="." enctype="multipart/form-data">
+    <form method="post" action="." class="form" enctype="multipart/form-data">
         <table class="table">
+            {% csrf_token %}
             {{ form }}
             <tr>
                 <td colspan="2">

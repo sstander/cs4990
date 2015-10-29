@@ -63,7 +63,11 @@
                     </li> 
                     <li> 
                         <a href="{% url 'microblog:profiledetail' user.id %}" style="color:white;">Logged in as @{{ user.username }}</a>
-
+                    {% if post_list %}
+                        </li>
+                        <li>
+                            <a href="{% url 'microblog:updateprofile' request.user.profile_set.all.0.id %}">Edit My Profile</a>
+                    {% endif %}
                 {% else %}
                     <a href="{% url 'auth_login' %}">Log In</a>
                     </li>

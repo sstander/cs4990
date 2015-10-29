@@ -12,19 +12,14 @@
             <img src="http://images.sodahead.com/polls/003831759/331109413_question_mark_face_answer_5_xlarge.jpeg" width="160" height="160" class="profilepic">
         {% endif %}
         {% if request.user.is_authenticated %}
-            {% ifequal request.user profile.user %}
-                <a href="{% url 'microblog:updateprofile' request.user.profile_set.all.0.id %}" class="btn btn-primary" style="float:right;">Edit My Profile</a>
-            {% else %}
-                {% if follow_profile not in profile.following.all %}
-                    <form action="{% url 'microblog:follow' profile.id %}" method="post">
-                        {% csrf_token %}
-                        <button class="btn btn-primary">Follow {{ profile }}</button>
-                    </form>
-                {% endif %}
-            {% endifequal %}
+            <div class="btn followbutton">
+                <form action="{% url 'microblog:follow' profile.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Follow @{{ profile.user.username }}</button>
+                </form>
+            </div>
         {% endif %}
         <div class="bio">
-            <h4>Bio:</h4>
             <p>{{ profile.bio }}</p>
             <p>Member of Twitterclone since: {{ profile.user.date_joined|date:"d M, Y" }}</p>
         </div>
@@ -51,4 +46,5 @@
             <p>@{{ profile.user.username }} has not posted anything on Twitterclone yet.</p>
         {% endfor %}
     </div>
-{% endblock content %}
+{% endblock %}
+   
