@@ -35,6 +35,8 @@
      list-style-type: none;
   }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  {% block 'extrascripts' %}{% endblock %}
   </head>
 
   <body>
@@ -58,6 +60,10 @@
             <li>
 	        {% if request.user.is_authenticated %}
                     <a href="{% url 'auth_logout' %}">Log Out</a>
+                    </li> 
+                    <li> 
+                        <a href="{% url 'microblog:profiledetail' user.id %}" style="color:white;">Logged in as @{{ user.username }}</a>
+
                 {% else %}
                     <a href="{% url 'auth_login' %}">Log In</a>
                     </li>
@@ -77,13 +83,30 @@
         <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
       </div>
 {% endblock content %}
+
+{# Pagintion Magic #}
+{% if is_paginated %}
+    <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'microblog:allposts' %}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'microblog:allposts' %}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+{% endif %}
+
     </div><!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>

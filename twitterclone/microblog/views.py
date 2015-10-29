@@ -22,28 +22,10 @@ class MyFeedView(ListView):
     template_name = "microblog/myfeed.html"
 
     def get_queryset(self):
-        my_profile = self.request.user.profile_set.all()[0]
+        my_profile, created = Profile.objects.get_or_create(user = self.request.user)
         following_profile_list = list(my_profile.following.all())
         following_profile_list.append(my_profile)
         return Post.objects.filter(profile__in = following_profile_list)
-
-class FollowFormView(SingleObjectMixin, View):
-    model = Profile
-    
-    def post(self, request, *args, **kwargs):
-        my_profile = request.user.profile_set.all()[0]
-        my_profile.following.add(self.get_object())
-        my_profile.save()
-        #return HttpResponseRedirect(reverse('microblog:followsuccess'))
-
-        #if request.is_ajax():
-            #returnHttp
-
-        return HttpResponseRedirect(reverse('microblog:followsuccess', args=(self.get_object().pk, )))
-
-class FollowSuccessView(SingleObjectMixin, TemplateView):
-    model = Profile
-    template_name = 'microblog/follow_success.html'
 
 class NewPostView(CreateView):
     model = Post
@@ -55,21 +37,42 @@ class NewPostView(CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.profile = Profile.objects.filter(user = self.request.user)[0]
+        post.save()
         return super(NewPostView, self).form_valid(form)
 
+class FollowFormView(FormView):
+    model = Profile
+
+    def post(self, request, *args, **kwargs):
+        try:
+            my_profile = request.user.profile_set.all()[0]
+        except Profile.DoesNotExist:
+            my_profile = Profile(bio = '', user = request.user)
+        my_profile.following.add(self.get_object())
+        my_profile.save()
+        return HttpResponseRedirect(reverse('microblog:followsuccess', args = (self.get_object().pk, )))
+
+class FollowSuccessView(DetailView):
+    model = Profile
+    template_name = 'microblog/follow_success.html'
+
+
+#class ProfileFormView(SingleObjectTemplateResponseMixin, ModelFormMixin, ProcessFormView):
+    #model = Profile
+    #fields = ['bio', 'profile_picture']
+    #template_name = 'microblog/profile_edit.
 
 
 
-
-
-    
-# class FollowFormView(FormView):
-#     success_url = reverse_lazy('microblog:followsuccess')
-# 
-#     class FollowUserForm(forms.Form):
-#         follow_user_id = forms.IntegerField(widget=forms.HiddenInput)
-# 
-#     form_class = FollowUserForm
-# 
-#     def form_valid(self, form):
-#         self.user_id
+#       my_profile = self.request.user.profile_set.all()[0]		Does not work because sometimes
+#									there is not a profile, and you
+#                                                                       are requesting one. Use one of the two below instead.
+#       my_profile, created = Profile.objects.get_or_create(user = self.request.user)
+#
+#
+#       try:
+#           my_profile = request.user.profile_set.all()[0]
+#       except Profile.DoesNotExist:
+#           my_profile = Profile(bio = '', user = request.user
+#       my_profile.following.add(self.get_object())
+#       my_profile.save()
