@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Clock In{% endblock %}
+{% block title %}Clock Out{% endblock %}
 {% block content %}
-    <h1>Clock In</h1>
+    <h1>Clock Out</h1>
     <form action="." method="post">
         {% csrf_token %}
         <table class="table">
             {{ form }}
         </table>
-        <button type="submit">Clock In!</button>
+        <button type="submit">Clock Out!</button>
     </form>
 {% endblock content %}

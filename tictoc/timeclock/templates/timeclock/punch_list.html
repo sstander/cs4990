@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Time Card{% endblock %}
+{% block content %}
+    <h1>{{ user.username }}'s Time Card
+        <a href="{% url 'timeclock:ko' %}" class="btn btn-primary" style="float:right;">Go to Clock</a>
+    </h1>
+    {% for punch in punch_list %}
+        {% include 'timeclock/_punch.html' %}
+        {% if not forloop.last %}
+            <hr class="punchdivider">
+        {% endif %}
+    {% empty %}
+        <p>No punches to show.</p>
+    {% endfor %}
+
+{% endblock content %}
