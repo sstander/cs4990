@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!--Google Analytics Code-->
+			<script>
+  				(function(i,s,o,g,r,a,m)
+					{i['GoogleAnalyticsObject']=r;
+					i[r]=i[r]||function()
+					{(i[r].q=i[r].q||[]).push(arguments)},
+					i[r].l=1*new Date();
+					a=s.createElement(o),
+ 					m=s.getElementsByTagName(o)[0];
+					a.async=1;
+					a.src=g;m.parentNode.insertBefore(a,m)})
+				(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  				ga('create', 'UA-44032839-1', 'sarahstander.com');
+ 				ga('send', 'pageview');
+			</script>
+		<!--/Google Analytics Code-->
+		
+		<!--Setting Metatags-->
+			<meta name="author" content="Sarah Stander">
+			<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+			<meta name="description" content="Web page made by Sarah Stander for a WEB 3000 class taught by Matt Kearl at Dixie State University.">
+			<meta name="googlebot" content="noarchive">
+			<meta name="keywords" content="Dixie State College,Dixie State University,St.George,Utah,Sarah,Stander,CSS,HTML5,VT 3000,index,home,mainpage">
+			<!--<meta http-equiv="refresh" content="500">-->
+			<meta name="robots" content="noindex,nofollow">
+   			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    			<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--/Setting Metatags-->
+		
+		<!--External CSS-->
+			<link href="960_12_col.css" 
+				type="text/css"
+	 			rel="stylesheet"
+			>
+			<link href="style.css" 
+				type="text/css"
+	 			rel="stylesheet"
+			>
+		<!--/External CSS-->
+
+		<!-- it works the same with all jquery version from 1.x to 2.x -->
+    			<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    		<!-- use jssor.slider.mini.js (40KB) instead for release -->
+    		<!-- jssor.slider.mini.js = (jssor.js + jssor.slider.js) -->
+    			<script type="text/javascript" src="js/jssor.js"></script>
+    			<script type="text/javascript" src="js/jssor.slider.js"></script>
+
+		<title>
+			Canterbury Dental
+		</title>
+	</head>
+
+	<body>
+    <script>
+        jQuery(document).ready(function ($) {
+            var options = {
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlaySteps: 1,                                  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
+                $AutoPlayInterval: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $PauseOnHover: 1,                               //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
+                //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                $SlideSpacing: 5, 					                //[Optional] Space between each slide in pixels, default value is 0
+                $DisplayPieces: 1,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                $ParkingPosition: 0,                                //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                $DragOrientation: 3,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,              //[Required] Class to create thumbnail navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+
+                    $ActionMode: 1,                                 //[Optional] 0 None, 1 act by click, 2 act by mouse hover, 3 both, default value is 1
+                    $AutoCenter: 3,                             //[Optional] Auto center thumbnail items in the thumbnail navigator container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 3
+                    $Lanes: 1,                                      //[Optional] Specify lanes to arrange thumbnails, default value is 1
+                    $SpacingX: 0,                                   //[Optional] Horizontal space between each thumbnail in pixel, default value is 0
+                    $SpacingY: 0,                                   //[Optional] Vertical space between each thumbnail in pixel, default value is 0
+                    $DisplayPieces: 5,                              //[Optional] Number of pieces to display, default value is 1
+                    $ParkingPosition: 0,                            //[Optional] The offset position to park thumbnail
+                    $Orientation: 1,                                //[Optional] Orientation to arrange thumbnails, 1 horizental, 2 vertical, default value is 1
+                    $DisableDrag: true                              //[Optional] Disable drag or not, default value is false
+                }
+            };
+
+            var jssor_slider2 = new $JssorSlider$("slider2_container", options);
+
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var parentWidth = jssor_slider2.$Elmt.parentNode.clientWidth;
+                if (parentWidth) {
+                    var sliderWidth = parentWidth;
+
+                    //keep the slider width no more than 602
+                    sliderWidth = Math.min(sliderWidth, 1150);
+
+                    jssor_slider2.$ScaleWidth(sliderWidth);
+                }
+                else
+                    window.setTimeout(ScaleSlider, 30);
+            }
+            ScaleSlider();
+
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            //responsive code end
+        });
+    </script>
+
+		<div id="content" class="container_12">
+			<header>
+				<div class="grid_12">
+					<a href=index.html>
+						<img src="images/logo.png"
+							class="fleft"
+							alt="logo"
+							title="Canterbury Dental"
+						/>
+					</a>
+				</div>
+			</header>
+
+			<div id="sliderWrapper" class="grid_12">
+				<nav>
+					<ul>
+						<li class="current">
+							<a href="index.html">Home</a>
+						</li>
+						<li>
+							<a href="aboutUs.html">About Us</a>
+						</li>
+						<li>
+							<a href="ourServices.html">Our Services</a>
+						</li>
+						<li>
+							<a href="contact.html">Contact</a>
+						</li>
+						<li>
+							<a href="faq.html">FAQ</a>
+						</li>
+					</ul>
+				</nav>
+    				<div id="slider2_container" 
+					style="position: relative; 
+						top: 0px; 
+						left: 0px; 
+						width: 940px; 
+						height: 555px; 
+						overflow: hidden;"	
+					>
+       
+				<div u="slides" id="slider" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 940px; height: 470px; -webkit-filter: blur(0px); overflow: hidden;">
+					<div>
+						<div style="overflow: hidden;">
+							<img src="images/kid.jpg"
+								alt="kid"
+								title="kid"
+							/>
+						</div>
+                				<div u="thumb">
+							<img class="i" src="images/kidThumb.jpg" alt="kid">
+							<div class="t">Happy Kids</div>
+							<div class="c">Kids love going to Carvel's office!</div>
+						</div>
+					</div>
+					<div>
+						<div style="overflow: hidden;">
+							<img src="images/officeInside.jpg"
+								alt="office inside"
+								title="office inside"
+							/>
+						</div>
+                				<div u="thumb">
+							<img class="i" src="images/officeInsideThumb.jpg" alt="office inside">
+							<div class="t">Interior</div>
+							<div class="c">This is what the inside looks like.</div>
+						</div>
+					</div>
+					<div>
+						<div style="overflow: hidden;">
+							<img src="images/carvel.jpg"
+								alt="carvel"
+								title="carvel"
+							/>
+						</div>
+                				<div u="thumb">
+							<img class="i" src="images/carvelThumb.jpg" alt="carvel">
+							<div class="t">Dr. Carvel</div>
+							<div class="c">Dr. Carvel Stander is here to help you.</div>
+						</div>
+					</div>
+					<div>
+						<div style="overflow: hidden;">
+							<img src="images/officeOutside.jpg"
+								alt="officeOutside"
+								title="officeOutside"
+							/>
+						</div>
+                				<div u="thumb">
+							<img class="i" src="images/officeOutsideThumb.jpg" alt="officeOutside">
+							<div class="t">Our Office</div>
+							<div class="c">This is what the outside looks like.</div>
+						</div>
+					</div>
+				</div>
+ <!-- Thumbnail Item Skin Begin -->
+
+				<div id="sliderNav" u="thumbnavigator" class="jssort12" style="position: absolute; width: 940px; height: 85px; left:0px; top: 470px;">
+            				<div u="slides" style="cursor: move; top:0px; left:0px;">
+                				<div u="prototype" class="p" style="POSITION: absolute; WIDTH: 235px; HEIGHT: 85px; TOP: 0; LEFT: 0; padding:0px;">
+                    					<div class=w>
+								<div u="thumbnailtemplate" class="c" style=" WIDTH: 100%; HEIGHT: 100%; position:absolute; TOP: 0; LEFT: 0; line-height:28px; text-align:left;">
+								</div>
+							</div>
+                				</div>
+            				</div>
+            				<!-- Thumbnail Item Skin End -->
+        			</div>
+        			<!-- ThumbnailNavigator Skin End -->
+				</div>
+			</div>
+			<section id="home" class="grid_8">
+				<ul class="grid_8 alpha omega">
+					<li class="grid_4 alpha">
+						<h2><a href="ourServices.html#preventive">Preventive Dentistry</a></h2>
+						<a href="ourServices.html#preventive">							
+							<img src="images/preventive.jpg"
+								alt="preventive dentistry"
+								title="preventive dentistry"
+								height="243"
+								width="300"
+							/>
+						</a>
+					</li>
+					<li class="grid_4 omega">
+						<h2><a href="ourServices.html#restorative">Restorative Dentistry</a></h2>
+						<a href="ourServices.html#restorative">							
+							<img src="images/crowns.jpg"
+								alt="restorative dentistry"
+								title="restorative dentistry"
+								height="243"
+								width="300"
+							/>
+						</a>
+					</li>
+				</ul>
+				<ul class="grid_8 alpha omega">
+					<li class="grid_4 alpha">
+						<h2><a href="ourServices.html#cosmetic">Cosmetic Dentistry</a></h2>
+						<a href="ourServices.html#cosmetic">							
+							<img src="images/whitening.jpg"
+								alt="cosmetic dentistry"
+								title="cosmetic dentistry"
+								height="243"
+								width="300"
+							/>
+						</a>
+					</li>
+					<li class="grid_4 omega">
+						<h2><a href="ourServices.html#emergency">Emergency Dentistry</a></h2>
+						<a href="ourServices.html#emergency">							
+							<img src="images/emergency.jpg"
+								alt="emergency dentistry"
+								title="emergency dentistry"
+								height="243"
+								width="300"
+							/>
+						</a>
+					</li>
+				</ul>
+			</section>
+			<aside class="grid_4 home">
+				<ul class="grid_4 alpha omega">
+					<li>
+						<h2><a href="contact.html">Contact</a></h2>	
+							<img src="images/tooth.gif"
+								alt="tooth"
+								title="tooth"
+								height="180"
+								width="180"
+							/>
+							<div class="button">
+								<a href="contact.html">
+									<p>
+										Make an appointment
+									</p>
+								</a>
+							</div>
+					</li>
+					<li>
+						<address class="contactInfo">
+							<p>
+								<a href="mailto:canterburydental@gmail.com">Dr. Carvel Stander</a>
+							</p>
+							<p>
+								Doctor of Dental Medicine
+							</p>
+							<p>
+								<a href="mailto:canterburydental@gmail.com">canterburydental@gmail.com</a>
+							</p>	
+							<br />
+							<p>
+								Canterbury Dental
+							</p>
+							<p>
+								14465 SW Pacific Hwy.
+							<br />
+								Tigard, OR 97224
+							</p>
+							<br />
+							<p>
+								Hours of Operation:
+							<br />
+								Mon-Thur: 9am - 5pm
+							</p>
+							<p>
+             							Phone: (503)620-9333
+							</p>
+							<p>
+								<a href="http://canterburydental.com">canterburydental.com</a>
+							</p>
+						</address>
+					</li>
+				</ul>					
+			</aside>
+			<footer class="grid_12">
+				<div>
+					<p>
+						&copy; Copyright 2014. All rights reserved. Created by Sarah Stander.
+					</p>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
