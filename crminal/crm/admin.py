@@ -11,3 +11,4 @@ admin.site.register(Reminder)
 admin.site.register(Report)
 admin.site.register(CallLog)
 admin.site.register(OpportunityStage)
+

@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block title %}CRM Dashboard{% endblock %}
+{% block extrascripts %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work',               11],
+                ['Eat',         2],
+                ['Commute',     2],
+                ['Watch TV',        2],
+                ['Sleep',               7]
+            ]);
+
+            var options = {
+                // title: 'My Daily Activities'
+                // legend: 'none',
+                is3D: true,
+            };
+
+			var chart = new google.visualization.PieChart(document.getElementByID('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+{% endblock extrascripts %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <h1><a>TRIMAS, Inc. CRM</a></h1>
+                <p>Three times the power of a normal relationship</p>
+            </div>
+       </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Upcoming Reminders
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style = "margin-top: -7px;" title = "List all Opportunities"></a>
+                        </span>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Opportunity</th>
+                                <th>Note</th>
+                                <th>Due Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#">Dire Wolf</a></td>
+                                <td>How is winter at Yellowstone going?</td>
+                                <td>15 Jan 2016</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Bottlenose Dolphin</a></td>
+                                <td>How are you always so happy?</td>
+                                <td>26 Nov 2015</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Peregrine Falcon</a></td>
+                                <td>How do I find a lifelong companion?</td>
+                                <td>10 Apr 2016</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Me</a></td>
+                                <td>How are classes going?</td>
+                                <td>23 Nov 2015</td>
+                            </tr>
+                    </table>
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-primary btn-fab btn-raised mdi-content-add-box text-right" title="Create New Reminder"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Newest Opportunities
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style = "margin-top: -7px;" title="List All Opportunities"></a>
+                        </span>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Opportunity</th>
+                                <th>Stage</th>
+                                <th>Value</th>
+                                <th>Creation Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#" class="text-info">Dire Wolf</a></td>
+                                <td>Closed - Success</td>
+                                <td>$34,563</td>
+                                <td>20 Apr 1995</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="text-info">Bottlenose Dolphin</a></td>
+                                <td>Proposal Sent</td>
+                                <td>$2,063,312</td>
+                                <td>19 Jul 2013</td>
+                            </tr>
+                                <td><a href="#">Peregrine Falcon</a></td>
+                                <td>Closed - Success</td>
+                                <td>$37,246</td>
+                                <td>14 Dec 1974</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Me</a></td>
+                                <td>Lead</td>
+                                <td>$10,000</td>
+                                <td>16 Feb 1994</td>
+                            </tr>
+                    </table>
+                    <div class="pull-right">
+                        <a href="#" class="btn btn-primary btn-fab btn-raised mdi-content-add-box text-right" title="Create New Opportunity"></a>
+                    </div>
+                </div>
+	    </div>
+	</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Opportunities By Stage
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style = "margin-top: -7px;" title = "List all Opportunities"></a>
+                        </span>
+                </div>
+
+                <div class="panel-body">
+		    <div id="piechart" style="height: 500px;"></div>
+		</div>
+	    </div>
+	</div>
+
+        <div class="col-lg-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Top Producers
+                        <span class="text-right pull-right">
+                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style = "margin-top: -7px;" title="List All Opportunities"></a>
+                        </span>
+                </div>
+
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Opportunities Closed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>43</td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>24</td>
+                            </tr>
+                                <td>Johnny Smith</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">Me</a></td>
+                                <td>15</td>
+                            </tr>
+			</tbody>
+                    </table>
+                </div>
+	    </div>
+	</div>
+    </div>
+{% endblock content %}

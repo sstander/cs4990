@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Opportunities{% endblock title %}
+{% block content %}
+    <h1>Opportunity List</h1>
+    <a class="btn btn-success" style="margin-top: -45px; float:right;" href="{% url 'crm:opportunity_create' %}">Add a New Opportunity</a>
+    <div class="row">
+        <div class="list-group col-lg-6" style="margin-top:10px;">
+            {% for opportunity in opportunity_list %}
+	        <a class="list-group-item" href="{% url 'crm:opportunity_detail' opportunity.id %}">{{ opportunity }} <span style="float:right;">Stage: {{ opportunity.stage }}</span></a>
+	    {% endfor %}
+        </div>
+
+        <h1>Opportunity Stage Log</h1>
+	<div class="list-group col-lg-6">
+	    {% for opps in opportunity_stages %}
+	        <a class="list-group-item" href="{% url 'crm:opportunitystage_detail' opps.id %}">{{ opps }}<span style="float:right;">{{ opps.time_stamp }}</span></a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

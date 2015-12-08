@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Opportunity Stages {{ opportunitystage }}{% endblock title %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+ 	    <tr class="success">
+		<th>Opportunity</th>
+		<th>Stage</th>
+		<th>Time Stamp</th>
+		<th>User Who Closed Opportunity</th>
+	    </tr>
+	</thead>
+	<tbody>
+	    <tr>
+	        <td>{{ opportunitystage.opportunity }}</td>
+		<td>{{ opportunitystage.stage }}</td>
+		<td>{{ opportunitystage.time_stamp }}</td>
+		<td>{{ opportunitystage.user }}</td>
+	    </tr>
+	</tbody>
+    </table>
+    <a class="btn btn-success" style="float:right;" href="{% url 'crm:opportunity_list' %}">Return to Opportunity Log List</a>
+{% endblock content %}

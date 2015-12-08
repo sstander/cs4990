@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="CRMinal - A Minimal CRM">
+    <meta name="author" content="Sarah Stander">
+
+    <title>{% block title %}CRMinal - A Minimal CRM{% endblock title %}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+
+    <!-- Custom Css -->
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="/media/static/css/styles.css">
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Allura|Vollkorn' rel='stylesheet' type='text/css'>
+
+    <!-- Calaner -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.css" rel="stylesheet" type="text/css">
+    <link media="print" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.print.css" rel="stylesheet" type="text/css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/roboto.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/material.min.css" rel="stylesheet" type="text/css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css" rel="stylesheet" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.4.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/material.min.js"></script>
+    <script>
+        $.material.init();
+    </script>
+
+    <!-- Extra Script -->
+    {% block extrascripts %}{% endblock %}
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CRMinal</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="{% url 'crm:contact_list' %}">Contacts</a></li>
+            <li><a href="{% url 'crm:opportunity_list' %}">Opportunities</a></li>
+            <li><a href="{% url 'crm:calllog_list' %}">Call Logs</a></li>
+            <li><a href="{% url 'crm:reminder_list' %}">Reminders</a></li>
+            <li><a href="{% url 'crm:stage_list' %}">Stages</a></li>
+	    <li><a href="{% url 'crm:company_list' %}">Companies</a></li>
+	    <li><a href="{% url 'crm:campaign_list' %}">Campaigns</a></li>
+            <li>
+	        {% if request.user.is_authenticated %}
+                    <a href="{% url 'auth_logout' %}">Log Out</a>
+                    </li> 
+                    <li> 
+                        <a href="/" style="color:white;">Logged in as {{ user.username }}</a>
+                {% else %}
+                    <a href="{% url 'auth_login' %}">Log In</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'registration_register' %}">Create Account</a>
+                {% endif %}
+            </li>
+
+
+          </ul>
+	
+           <form class="navbar-form navbar-right">
+               <input type="text" class="form-control col-lg-8" placeholder="Search">
+           </form>
+
+
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container content">
+      {% if messages %}
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="alert alert-success">
+              {% for message in messages %}
+              <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+              {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    {% block content %}
+
+    {% endblock %}
+    </div><!-- End of Container -->
+
+    <footer>
+      <div class="container">
+        <hr>
+        <p style="text-align: center">
+            Copyright &copy; 2015 CRMinal<br>
+        <a href="http://djangopony.com/" class="ponybadge" title="Magic! Ponies! Django! Whee!"><img src="http://media.djangopony.com/img/small/badge.png" width="210" height="65" alt="pony powered"></a>
+        </p>
+      </div>
+    <footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'registration',
     'crm',
+   #'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,3 +108,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+SITE_ID = 1
