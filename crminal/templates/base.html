@@ -72,7 +72,7 @@
                     <li> 
                         <a href="/" style="color:white;">Logged in as {{ user.username }}</a>
                 {% else %}
-                    <a href="{% url 'auth_login' %}">Log In</a>
+                    <a href="{% url 'auth_login' %}?next=/">Log In</a>
                     </li>
                     <li>
                         <a href="{% url 'registration_register' %}">Create Account</a>

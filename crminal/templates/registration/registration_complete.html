@@ -3,12 +3,4 @@
 
 {% block content %}
 <p>{% trans "You are now registered. Enjoy the site!" %}</p>
-<p>Make your first post!</p>
-    <form action="{% url 'microblog:addpost' %}" method="post">
-        {% csrf_token %}
-        <table class="table">
-            {{ form }}
-        </table>
-        <button style="float:right; margin-top:-64px;" type="submit" class="btn btn-primary">Add Post</button>
-    </form>
 {% endblock %}
