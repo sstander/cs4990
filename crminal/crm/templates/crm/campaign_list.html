@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Campaigns{% endblock title %}
+{% block content %}
+    <div class="row">
+	<div class="col-lg-12">
+	    <div class="panel panel-primary">
+		<div class="panel-heading">	
+		    List All Campaigns
+		</div>
+	    	<div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+				<th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for campaign in campaign_list %}
+				<tr>
+				    <td><a href="{% url 'crm:campaign_detail' campaign.id %}" class="text-info">{{ campaign.name }}</a></td>
+				    <td>{{ campaign.description }}</td>
+				</tr>
+			    {% endfor %}
+			</tbody>
+		    </table>
+		    <div class="pull-right">
+			<a href="{% url 'crm:campaign_create' %}" class="btn btn-success btn-circle glyphicon glyphicon-plus" title="Create New Campaign"></a>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+{% endblock content %}

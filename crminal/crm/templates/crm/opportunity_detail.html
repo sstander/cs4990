@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block title %}Opportunity {{ opportunity.name }}{% endblock title %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="jumbotron">
+                <h1><a href="/">Opportunity {{ opportunity.name }} ({{ opportunity.stage }})</a></h1>
+                <p class="pull-right">
+		    <a href="{% url 'crm:opportunity_update' opportunity.id %}"><span class="glyphicon glyphicon-edit" style="color:blue;"></a>
+		    <a href="{% url 'crm:opportunity_delete' opportunity.id %}"><span class="glyphicon glyphicon-remove" style="color:red;"></a>
+		</p>
+            </div>
+       </div>
+    </div>
+    <div class="row">
+	<div class="col-lg-6">
+	    <div class="panel panel-primary">
+		<div class="panel-heading">
+		    Contact Information
+		</div>
+		<div class="panel-body">
+                    <table class="table">
+                        <tr>
+			    <th>Company</th>
+			    <td><a href="{% url 'crm:company_list' %}">{{ opportunity.company }}</a></td>
+			</tr>
+                        <tr>
+			    <th>Address</th>
+			    <td>{{ opportunity.company.address1 }}</td>
+			    <td>{{ opportunity.company.address2 }}</td>
+			</tr>
+                        <tr>
+			    <th>City</th>
+			    <td>{{ opportunity.company.city }}</td>
+			</tr>
+                        <tr>
+			    <th>State, ZIP</th>
+			    <td>{{ opportunity.company.state }}, {{ opportunity.company.zipcode }}</td>
+			</tr>
+                        <tr>
+			    <th>Phone</th>
+			    <td>{{ opportunity.company.phone }}</td>
+			</tr>
+                        <tr>
+			    <th>Website</th>
+			    <td><a href="{{ opportunity.company.website }}">{{ opportunity.company.website }}</a></td>
+			</tr>
+		    </table>
+		</div>
+	    </div>
+	</div>
+	
+	<div class="col-lg-6">
+	    <div class="panel panel-info">
+		<div class="panel-heading">
+		    Map
+		</div>
+	    	<div class="panel-body">
+		<script>
+		    var map;
+		    function initMap() {
+			address = '{{ opportunity.company.address1 }} {{ opportunity.company.address2 }}, {{ opportunity.company.city }}, {{ opportunity.company.state }} {{ opportunity.company.zipcode }}';
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode ({ 'address': address }, function(results, status) {
+			    var c = results[0].geometry.location;
+			    latitude = c.lat();
+			    longitude = c.lng();
+			    map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: latitude, lng: longitude},
+				scrollwheel: false,
+				zoom: 14,
+			    });
+			    var marker = new google.maps.Marker({
+				map: map,
+				position: {lat: latitude, lng: longitude},
+				title: 'Opportunity Name',
+			    });
+			});
+		    }
+		</script>
+                <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDxCDEfKuCyTVE-Ex43CG5PQec_Uc5CiQQ&callback=initMap" async defer></script>
+		</div>
+	    </div>
+	</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+	    <div class="panel panel-info">
+		<div class="panel-heading">
+		    Call Log for TRIMAS, Inc.
+		    <span class="text-right pull-right">
+			<a href="{% url 'crm:calllog_list' %}" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List All Call Logs"></a>
+		    </span>
+		</div>
+		<div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Note</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+			    {% if calllog_list %}
+                                {% for calllog in calllog_list %}
+				    <tr>
+				        <td>{{ calllog.user }}</td>
+				        <td>{{ calllog.note }}</td>
+				        <td>{{ calllog.date|date"j M Y" }}</td>
+				    <tr>
+			        {% endfor %}
+			    {% else %}
+				<p>No call logs to list.</p>
+			    {% endif %}
+			</tbody>
+		    </table>
+		</div>
+	    </div>
+        </div>
+
+        <div class="col-lg-6">
+	    <div class="panel panel-primary">
+		<div class="panel-heading">
+		    Stage History
+		</div>
+		<div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Stage</th>
+                                <th>User</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for opp in opportunitystages %}
+				<tr>
+				    <td>{{ opp.stage }}</td>
+				    <td>{{ opp.user }}</td>
+				    <td>{{ opp.time_stamp }}</td>
+				<tr>
+			    {% endfor %}
+			</tbody>
+		    </table>
+		</div>
+	    </div>
+	</div>
+    </div>
+{% endblock content %}

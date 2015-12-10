@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Reminder {{ reminder.name }}{% endblock title %}
+{% block content %}
+    <div class="row">
+	<div class="col-lg-12">
+	    <div class="panel panel-primary">
+		<div class="panel-heading">	
+		    Reminder {{ reminder.name }}
+		</div>
+	    	<div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="success">
+                                <th>Opportunity</th>
+				<th>Note</th>
+				<th>Completed</th>
+				<th>Date</th>
+                                <th>Edit</th>
+				<th>Delete</th>
+			    </tr>
+			</thead>
+		        <tbody>
+			    <tr>
+				<td>{{ reminder.opportunity }}</td>
+				<td>{{ reminder.note }}</td>
+				<td>{{ reminder.completed }}</td>
+				<td>{{ reminder.date }}</td>
+
+				<td><a href="{% url 'crm:company_update' company.id %}"><span style="color:blue;" class="glyphicon glyphicon-edit"></span></a></td>
+				<td><a href="{% url 'crm:company_delete' company.id %}"><span style="color:red;" class="glyphicon glyphicon-remove"></span></a></td>
+			    </tr>
+			</tbody>
+		    </table>
+		    <a class="btn btn-success" style="float:right;" href="{% url 'crm:reminder_list' %}">Return to Reminder List?</a>
+		</div>
+	    </div>
+	</div>
+    </div>
+{% endblock content %}

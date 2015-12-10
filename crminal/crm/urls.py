@@ -8,7 +8,9 @@ from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Re
 urlpatterns = [
     url(r'^$', login_required(views.Dashboard.as_view()), name="dashboard"),
  
-    url(r'^search/$', login_required(views.search), name="search"),
+    url(r'^search/$', login_required(views.SearchResults.as_view()), name="search"),
+
+    url(r'^reports/$', login_required(views.Reports.as_view()), name="reports"),
  
     url(r'^stages/$', login_required(views.StageList.as_view()), name="stage_list"),
     url(r'^stages/(?P<pk>\d+)/$', login_required(views.StageDetail.as_view()), name="stage_detail"),

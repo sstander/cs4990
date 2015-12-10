@@ -14,16 +14,20 @@
                                 <th>Opportunity</th>
                                 <th>Stage</th>
                                 <th>Value</th>
-                                <th>Creation Date</th>
+                                <th>Source</th>
+				<th>User</th>
+				<th>Creation Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for opp in opportunity_stages %}
+                            {% for opp in opportunity_list %}
 				<tr>
-				    <td><a href="{% url 'crm:opportunity_detail' opp.opportunity.id %}" class="text-info">{{ opp.opportunity.company }}</a></td>
+				    <td><a href="{% url 'crm:opportunity_detail' opp.id %}" class="text-info">{{ opp.company }}</a></td>
 				    <td>{{ opp.stage }}</td>
-				    <td>${{ opp.opportunity.value }}</td>
-				    <td>{{ opp.time_stamp|date:"j M Y" }}</td>
+				    <td>${{ opp.value }}</td>
+				    <td>{{ opp.source }}</td>
+				    <td>{{ opp.user }}</td>
+				    <td>{{ opp.create_date|date:"j M Y" }}</td>
 				</tr>
 			    {% endfor %}
 			</tbody>

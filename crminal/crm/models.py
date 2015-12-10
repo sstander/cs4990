@@ -10,7 +10,7 @@ class Stage(models.Model):
     value = models.IntegerField(help_text = 'On a scale of 0 to 100 of the stage of the pipeline')
 
     def __unicode__(self):
-        return self.name
+        return str(self.name)
 
     def get_absolute_url(self):
         return reverse('crm:stage_index')
@@ -27,7 +27,7 @@ class Company(models.Model):
     phone = models.CharField(max_length=200, blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return str(self.name)
 
     class Meta:
         verbose_name_plural = "companies"
@@ -49,14 +49,14 @@ class Contact(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
     def __unicode__(self):
-        return self.get_full_name()
+        return str(self.get_full_name())
 
 class Campaign(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
-        return self.name
+        return str(self.name)
 
 class Opportunity(models.Model):
     stage = models.ForeignKey(Stage)
@@ -69,9 +69,9 @@ class Opportunity(models.Model):
 
     def __unicode__(self):
         if self.company:
-            return self.company
+            return str(self.company)
         else:
-            return self.contact
+            return str(self.contact)
 
     def get_absolute_url(self):
         return reverse('crm:opportuny_index')
@@ -94,7 +94,7 @@ class Report(models.Model):
     link = models.URLField()
 
     def __unicode__(self):
-        return self.name
+        return str(self.name)
 
 class CallLog(models.Model):
     opportunity = models.ForeignKey(Opportunity)

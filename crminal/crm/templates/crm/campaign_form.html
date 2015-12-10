@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{% if campaign %}Update Campaign {{ campaign.name }}{% else %}Create a New Campaign {% endif %}{% endblock title %}
+{% block content %}
+    <div class="well bs-component" style="display:inline-block">
+        <form action="." method="post" role="form">
+            <table class="table">
+                {% csrf_token %}
+		<thead>
+		    <tr>
+		        <th colspan="2">
+			    <h1>
+				<center>
+				    {% if campaign %}Update{% else %}Create New Campaign{% endif %} {{ campaign }}
+				</center>
+			    </h1>
+			</th>
+		    </tr>
+		</thead>
+                {{ form }}
+		<tbody>
+		    <tr>
+			<td colspan="2">
+			    <button class="btn btn-primary">
+				{% if campaign %}Update{% else %}Create{% endif %}
+			    </button>
+			    <a style="float:right; margin-top:20px;" href="..">Cancel</a>
+			</td>
+		    </tr>
+		</tbody>
+	    </table>
+	</form>
+    </div>
+{% endblock content %}

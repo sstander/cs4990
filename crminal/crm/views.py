@@ -1,15 +1,9 @@
 #from django.http import HttpResponseRedirect
 #from django import forms
 #from django.views.generic.detail import SingleObjectMixin
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, FormView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy, reverse
-from django.contrib.auth.models import User
-from django.db.models import Count
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
@@ -18,29 +12,6 @@ import datetime
 from itertools import chain
 #from viewsets import ModelViewSet
 from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
-
-def search(request):
-    if request.method == 'GET':
-        if request.GET.get('q'):
-            contact_results = []
-	    opp_results = []
-	    company_results = []
-	    search_words = "%s" % (request.GET.get('q'))
-	    search_word_list = search_words.split(' ')
-	    for search_word in search_word_list:
-	        print search_word
-	        contact_firstname = Contact.objects.filter(first_name__icontains = search_word)
-	        contact_lastname = Contact.objects.filter(last_name__icontains = search_word)
-		contact.company = Contact.objects.filter(company__name__icontains = search_word)
-		opp_firstname = Opportunity.objects.filter(contact__first_name__incontains = search_word)
-		opp_lastname = Opportunity.objects.filter(contact__last_name__icontains = search_word)
-		opp_stage = Opportunity.objects.filter(stage__name__icontains = search_word)
-		company = Company.objects.filter(name__icontains = search_word)
-		contact_results = contact_results + list(contact_firstname) + list(contact_lastname) + list(contact_company)
-		opp_results = opp_results + list(opp_firstname) + list(opp_lastname) + list(opp_stage)
-		company_results = company_results + list(company)
-	    return render_to_response('crm/search_results.html', {'search':search_words, 'contacts': contact_results, 'opps': opp_results, 'companies': company_results}, context_instance=RequestContext(request))
-    return render_to_response('crm/search_results.html', context_instance=RequestContext(request))
 
 # Create your views here.
 class Dashboard(ListView):
@@ -58,6 +29,32 @@ class Dashboard(ListView):
 	context["opportunity_list"] = Opportunity.objects.all().order_by('-create_date')[:5]
 
 	return context
+
+class SearchResults(TemplateView):
+    template_name = 'crm/search_results.html'
+    def get_context_data(self, **kwargs):
+	context = super(SearchResultsView, self).get_context_data(**kwargs)
+
+        # If we don't have a search term in the URL, just return the context as is.
+	# Otherwise, populate the template context with potential search results.
+
+	if not self.request.GET.get("q", None):
+	    return context
+
+	term = self.request.GET["q"] # save off the search term for convenience
+	context['searchterm'] = term # send the search term to the template's context
+	context['contact_list'] = Contact.objects.all().filter(
+	    Q(first_name__icontains = term) | Q(last_name__icontains = term))
+	context['company_list'] = Company.objects.all().filter(name__icontains = term)
+	context['reminder_list'] = Reminder.objects.all().filter(note__icontains = term)
+	context['calllog_list'] = CallLog.objects.all().filter(note__icontains = term)
+	context['opportunity_list'] = Opportunity.objects.all().filter(
+	    Q(contact__first_name__icontains = term) | Q(contact__last_name__icontains = term) | Q(stage__name__icontains = term))
+	return context
+
+class Reports(ListView):
+    model = Report
+    template_name = "reports/dashboard.html"
 
 class StageList(ListView):
     model = Stage
@@ -168,7 +165,7 @@ class UpdateOpportunity(UpdateView):
         opportunity = form.save(commit=False)
 
         #Checks to make sure the stage being moved to is the next stage and not a previous stage
-        if opportunity.stage.value > self.get_object().stage.value:
+        if opportunity.stage.value != self.get_object().stage.value:
             opportunity_stage = OpportunityStage()
             opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_objects().pk)[0]
 	    opportunity_stage.stage = form.cleaned_data['stage']
