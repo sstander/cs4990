@@ -26,8 +26,8 @@
 				<td>{{ reminder.completed }}</td>
 				<td>{{ reminder.date }}</td>
 
-				<td><a href="{% url 'crm:company_update' company.id %}"><span style="color:blue;" class="glyphicon glyphicon-edit"></span></a></td>
-				<td><a href="{% url 'crm:company_delete' company.id %}"><span style="color:red;" class="glyphicon glyphicon-remove"></span></a></td>
+				<td><a href="{% url 'crm:reminder_update' reminder.id %}"><span style="color:blue;" class="glyphicon glyphicon-edit"></span></a></td>
+				<td><a href="{% url 'crm:reminder_delete' reminder.id %}"><span style="color:red;" class="glyphicon glyphicon-remove"></span></a></td>
 			    </tr>
 			</tbody>
 		    </table>

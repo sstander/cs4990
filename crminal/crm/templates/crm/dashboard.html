@@ -1,40 +1,38 @@
 {% extends 'base.html' %}
 {% block title %}CRM Dashboard{% endblock title %}
 {% block extrascripts %}
-    <script type="text/javascript" scr="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
-        google.setOnLoadCallback(drawChart); 
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-		['User', 'Opportunities Closed'],
-		{% for stage in stage_by_opp %}
-	            ['{{ stage.name }}', {{ stage.opp_count }}],
-		{% endfor %}
-	    ]);
-
-	    var options = {
-                // title: 'My Daily Activities'
-	        // legend: 'none',
-                height: 400,
-	        width: 500,
-	        is3D: true,
-	        chartArea: {left:20, top:20, width:'100%', height:'100%'}
-            };
-
-	    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-	        chart.draw(data, options);
-        }
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['User', 'Opportunities Closed'],
+          {% for stage in stage_by_opp %}
+          ['{{ stage.name }}', {{ stage.opp_count }}],
+          {% endfor %}
+        ]);
+        var options = {
+          // title: 'My Daily Activities'
+          // legend: 'none',
+          height: 400,
+          width: 500,
+          is3D: true,
+          chartArea: {left:20, top:20, width:'100%', height:'100%'}
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
     </script>
 
     <style>
-        .btn-circle {
-            border-radius: 30px;
-	    line-height: 1.5;
-	    font-size: 12px;
-	}
+      .btn-circle {
+        border-radius: 30px;
+        line-height: 1.5;
+        font-size: 12px;
+      }
     </style>
-{% endblock extrascripts %}
+{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
@@ -65,7 +63,7 @@
                         <tbody>
 			    {% for reminder in reminders %}
 		 	        <tr>
-				    <td><a href="#">{{ reminder.opportunity }}</a></td>
+				    <td><a href="{% url 'crm:reminder_detail' reminder.opportunity.id %}">{{ reminder.opportunity }}</a></td>
 				    <td>{{ reminder.note }}</td>
 				    <td>{{ reminder.date|date:"j M Y" }}</td>
 	     		        </tr>
@@ -98,12 +96,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for opp in opportunity_stages %}
+                            {% for opp in user.opportunity_set.all %}
 				<tr>
-				    <td><a href="{% url 'crm:opportunity_detail' opp.opportunity.id %}" class="text-info">{{ opp.opportunity.company }}</a></td>
+				    <td><a href="{% url 'crm:opportunity_detail' opp.id %}" class="text-info">{{ opp.company }}</a></td>
 				    <td>{{ opp.stage }}</td>
-				    <td>${{ opp.opportunity.value }}</td>
-				    <td>{{ opp.time_stamp|date:"j M Y" }}</td>
+				    <td>${{ opp.value }}</td>
+				    <td>{{ opp.create_date|date:"j M Y" }}</td>
 				</tr>
 			    {% endfor %}
 			</tbody>

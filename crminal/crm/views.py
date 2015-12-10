@@ -7,7 +7,7 @@ from django.views.generic import FormView, ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
-from django.db.models import Count
+from django.db.models import Count, Q
 import datetime
 from itertools import chain
 #from viewsets import ModelViewSet
@@ -22,10 +22,10 @@ class Dashboard(ListView):
         context = super(Dashboard, self).get_context_data(**kwargs)
 
         #AddingOpportunityStages to the template's context
-	context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
+	context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')[:5]
 	context["reminders"] = Reminder.objects.all().order_by('-date')[:5]
-	context["opp_users"] = User.objects.annotate(num_opp=Count('opportunitystage'))
-	context["stage_by_opp"] = Stage.objects.annotate(opp_count = Count('opportunity'))
+	context["opp_users"] = User.objects.filter(opportunitystage__stage__value = 100).annotate(num_opp=Count('opportunitystage'))[:5]
+	context["stage_by_opp"] = Stage.objects.order_by('-order').annotate(opp_count = Count('opportunity'))
 	context["opportunity_list"] = Opportunity.objects.all().order_by('-create_date')[:5]
 
 	return context
@@ -33,7 +33,7 @@ class Dashboard(ListView):
 class SearchResults(TemplateView):
     template_name = 'crm/search_results.html'
     def get_context_data(self, **kwargs):
-	context = super(SearchResultsView, self).get_context_data(**kwargs)
+	context = super(SearchResults, self).get_context_data(**kwargs)
 
         # If we don't have a search term in the URL, just return the context as is.
 	# Otherwise, populate the template context with potential search results.
@@ -167,7 +167,7 @@ class UpdateOpportunity(UpdateView):
         #Checks to make sure the stage being moved to is the next stage and not a previous stage
         if opportunity.stage.value != self.get_object().stage.value:
             opportunity_stage = OpportunityStage()
-            opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_objects().pk)[0]
+            opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_object().pk)[0]
 	    opportunity_stage.stage = form.cleaned_data['stage']
 	    opportunity_stage.user = self.request.user
 	    opportunity_stage.save()
